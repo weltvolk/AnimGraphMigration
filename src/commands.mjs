@@ -9,14 +9,30 @@ export const COMMAND_SCHEMAS = Object.freeze({
   'finalize-import': { required: ['root', 'importRoot', 'output'], optional: [] },
 });
 
-export function validateCommandInput(command, input) {
-  if (!Object.hasOwn(COMMAND_SCHEMAS, command)) throw new Error('Unknown command');
-  const { required, optional } = COMMAND_SCHEMAS[command];
+export const GENERAL_COMMAND_SCHEMAS = Object.freeze({
+  inspect: { required: ['root', 'workspace'], optional: [] },
+  convert: { required: ['root', 'workspace', 'output'], optional: [] },
+  verify: { required: ['root'], optional: [] },
+});
+
+function validateInput(command, input, schemas) {
+  if (!Object.hasOwn(schemas, command)) throw new Error('Unknown command');
+  const { required, optional } = schemas[command];
   const allowed = [...required, ...optional];
   if (!input || typeof input !== 'object' || Array.isArray(input)
     || Object.keys(input).some(key => !allowed.includes(key) || typeof input[key] !== 'string' || !input[key])
     || required.some(key => !Object.hasOwn(input, key))) throw new Error('Invalid request fields');
   return input;
+}
+
+export function validateCommandInput(command, input) {
+  return validateInput(command, input, COMMAND_SCHEMAS);
+}
+
+export async function runGeneralCommand(command, input) {
+  validateInput(command, input, GENERAL_COMMAND_SCHEMAS);
+  // Pass only validated own fields; inherited options cannot activate optional modules.
+  return runCommand(command, Object.fromEntries(Object.entries(input)));
 }
 
 export async function runCommand(command, input) {

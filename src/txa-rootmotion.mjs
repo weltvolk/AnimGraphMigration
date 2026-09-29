@@ -1,5 +1,5 @@
 /**
- * Bounded Blackbird TXA transformation. No file access or native ANM generation.
+ * Bounded source-profile TXA transformation. No file access or native ANM generation.
  * Structural matching does not establish source provenance: the caller MUST
  * verify the original digest through a trusted profile before applying it.
  * The operation is not idempotent and cannot identify a stripped prior output.
@@ -166,7 +166,7 @@ export function migrateRootMotionTxa(text, { source = '<TXA>' } = {}) {
     const actualRoot = patch(only(rootFrames[i], '#t'), newRoot, ROOT, layout[i]);
     const actualPelvis = patch(only(pelvisFrames[i], '#t'), newPelvis, PELVIS, layout[i]);
     // R = Rx(-90 degrees). Unit effective displacement is the measured
-    // Blackbird export profile, not a claim about arbitrary literal TXA scales.
+    // supported export profile, not a claim about arbitrary literal TXA scales.
     const pose = (r, p) => [r[0] + p[0], r[1] + p[2], r[2] - p[1]];
     const beforePose = pose(oldRoot, oldPelvis), afterPose = pose(actualRoot, actualPelvis);
     const error = Math.max(...beforePose.map((v, axis) => Math.abs(v - afterPose[axis])));
@@ -189,7 +189,7 @@ export function migrateRootMotionTxa(text, { source = '<TXA>' } = {}) {
     text: migrated,
     report: {
       source, profileId: ROOT_MOTION_PROFILE_ID,
-      profile: 'Blackbird64 constant RootQ sole Pelvis; unit effective translation scale',
+      profile: '64-bone constant RootQ sole Pelvis; unit effective translation scale',
       rootBone: ROOT, pelvisBone: PELVIS, boneNames: [...nodes.keys()],
       requiresVerifiedOriginal: true, sourceProvenanceVerified: false,
       nativeImportRequired: true, runtimeValidated: false,

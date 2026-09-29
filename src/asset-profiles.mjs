@@ -18,7 +18,7 @@ const profiles = new Map([[blackbird.profileId, freeze(blackbird)]]);
 export function listAssetProfiles() {
   return [...profiles.values()].map(profile => ({
     id: profile.profileId, version: profile.profileVersion,
-    name: 'Blackbird 2.08: zwölf bewegte Root-Clips',
+    name: 'Bounded root-motion profile: twelve movement clips',
     activeAssignmentCount: profile.assignments.length,
     requiredClipCount: profile.assignments.filter(job => job.action === 'transform-root-motion').length,
     experimental: true,

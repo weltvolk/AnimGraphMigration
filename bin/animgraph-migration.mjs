@@ -4,18 +4,18 @@ import { COMMAND_SCHEMAS, runCommand } from '../src/commands.mjs';
 
 const help = `AnimGraphMigration ${VERSION}
 Usage:
-  node bin/animgraph-migration.mjs inspect --root DIR --workspace Mod/anims/example.aw [--asset-profile blackbird-2.08-motion-v1]
-  node bin/animgraph-migration.mjs convert --root DIR --workspace Mod/anims/example.aw --output NEW_DIR [--asset-profile blackbird-2.08-motion-v1]
+  node bin/animgraph-migration.mjs inspect --root DIR --workspace Mod/anims/example.aw [--asset-profile PROFILE_ID]
+  node bin/animgraph-migration.mjs convert --root DIR --workspace Mod/anims/example.aw --output NEW_DIR [--asset-profile PROFILE_ID]
   node bin/animgraph-migration.mjs verify --root CONVERTED_DIR
-  node bin/animgraph-migration.mjs prepare-import --root PREPARED --output NEW_IMPORT_DIR --project-template TEMPLATE.gproj --skeleton-definitions SKELETONS.anim.xml --game-root EXPERIMENTAL_DATA
+  node bin/animgraph-migration.mjs prepare-import --root PREPARED --output NEW_IMPORT_DIR --project-template TEMPLATE.gproj --skeleton-definitions SKELETONS.anim.xml --game-root GAME_DATA
   node bin/animgraph-migration.mjs verify-import --root PREPARED --import-root IMPORT_DIR
   node bin/animgraph-migration.mjs finalize-import --root PREPARED --import-root IMPORT_DIR --output NEW_VERIFIED_DIR
   node bin/animgraph-migration.mjs serve [--port 0] [--open]
 
 Converts supported legacy resources directly into DayZ 1.30 text resources.
 Input is never edited. Output must be a new, separate directory.
-The optional Blackbird profile prepares TXAs. Its ANMs require native Experimental
-Workbench import, verify-import and finalize-import before an isolated game test.
+Optional source profiles prepare bounded TXAs. Their ANMs require native
+DayZ 1.30 Workbench import, verify-import and finalize-import before a game test.
 Results are JSON. Exit codes: 0 success, 1 validation failure, 2 invalid arguments.
 `;
 const argv = process.argv.slice(2);

@@ -1,6 +1,6 @@
 {
   "name": "animgraph-migration",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Copy-only DayZ legacy animation graph migration with explicit format validation",
   "type": "module",
   "private": true,

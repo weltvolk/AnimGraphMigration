@@ -5,10 +5,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import { parseDocument, values } from './syntax.mjs';
 import { convertGraphFile, convertGraphRoot, inspectGraphFile } from './graph.mjs';
 import { convertTemplate, convertInstance, convertWorkspace, generateMeta, deterministicGuid } from './resources.mjs';
-import { validateAssetProfile } from './asset-profiles.mjs';
-import { migrateRootMotionTxa } from './txa-rootmotion.mjs';
 
-export const VERSION = '1.0.0';
+export const VERSION = '1.1.0';
 export const REPORT_DIRECTORY = '.animgraph-migration';
 
 export function virtualPath(value) {
@@ -250,6 +248,8 @@ export async function planMigration({ root, workspace, assetProfile }) {
   let assetMigration = null;
   if (assetProfile !== undefined) {
     if (typeof assetProfile !== 'string' || !assetProfile) throw new Error('Asset profile must be a nonempty supported profile ID');
+    const { validateAssetProfile } = await import('./asset-profiles.mjs');
+    const { migrateRootMotionTxa } = await import('./txa-rootmotion.mjs');
     const assetPlan = validateAssetProfile({ profileId: assetProfile, inventory: inv.files, activeAssignments });
     const jobs = [];
     for (const job of assetPlan.jobs) {

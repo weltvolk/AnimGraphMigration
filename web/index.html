@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>AnimGraphMigration</title>
@@ -7,7 +7,8 @@
   <style>
     :root{color-scheme:dark;font:16px/1.55 system-ui,sans-serif;background:#101820;color:#eaf0f4}
     *{box-sizing:border-box}body{margin:0}main{max-width:940px;margin:44px auto;padding:0 24px}header{margin-bottom:32px}
-    .brand{display:flex;align-items:center;gap:16px}.brand img{width:64px;height:64px;flex:none}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#6fd7b9}h1{font-size:clamp(24px,4vw,36px);letter-spacing:-.04em;margin:10px 0}p{color:#b6c6d0}
+    .brand{display:flex;align-items:center;gap:16px}.brand img{width:min(100%,540px);height:auto;display:block}.brand{max-width:100%;flex:1 1 400px}.brand h1{margin:0;font-size:inherit}.brand .eyebrow{margin-top:12px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#6fd7b9}h1{font-size:clamp(24px,4vw,36px);letter-spacing:-.04em;margin:10px 0}p{color:#b6c6d0}
+    .header-row{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.language{min-width:150px}.language label{font-size:13px;margin:0 0 5px}.language select{padding:8px 12px}
     .panel{background:#18232d;border:1px solid #2c3c49;border-radius:16px;padding:26px;margin:20px 0}h2{font-size:20px;margin:0 0 16px}
     label{display:block;margin:18px 0 7px;font-weight:600}input,select{width:100%;background:#0f1922;border:1px solid #536471;border-radius:8px;color:inherit;padding:12px;font:inherit}
     small{display:block;color:#a3b5c1;margin:7px 0}button{border:0;border-radius:8px;padding:12px 18px;font:600 15px system-ui;cursor:pointer;background:#69d5b6;color:#102b23}button.secondary{color:#eaf0f4;background:#344755}button:disabled{opacity:.5;cursor:wait}
@@ -15,64 +16,112 @@
   </style>
 </head>
 <body><main>
-  <header><div class="brand"><img src="/assets/logo.svg" alt=""><div><div class="eyebrow">DayZ · lokale Projektkopien</div><h1>AnimGraphMigration</h1></div></div><p>Alte Animationsgraphen für das 1.30-Format vorbereiten. Zuerst prüfen, dann eine neue Projektkopie erzeugen.</p></header>
-  <section class="panel"><h2>Projekt auswählen</h2>
-    <label for="root">Quellordner</label><input id="root" autocomplete="off" spellcheck="false" placeholder="H:\Modding\Source">
-    <small>Der Ordner, unter dem die Pfade aus der Mod beginnen. Beispiel: Er enthält den Unterordner MyBird.</small>
-    <label for="workspace">Workspace innerhalb dieses Ordners</label><input id="workspace" autocomplete="off" spellcheck="false" placeholder="MyBird/anims/animgraph/bird.aw">
-    <label for="assetProfile">Animationsdateien</label><select id="assetProfile"><option value="">Nur Graph, Template, Instanz und Workspace</option><option value="blackbird-2.08-motion-v1">Blackbird 2.08 – zwölf Bewegungsclips vorbereiten</option></select>
-    <small>Das Blackbird-Profil akzeptiert den geprüften Originalbestand. Es bereitet die Bewegungsquellen vor; anschließend müssen die Clips in der Experimental Workbench importiert werden.</small>
-    <label for="output">Neuer Zielordner</label><input id="output" autocomplete="off" spellcheck="false" placeholder="H:\Modding\MyBird_130_Test">
-    <small>Der Zielordner darf noch nicht existieren. Die Quelldateien bleiben unverändert.</small>
-    <div class="actions"><button id="inspect" class="secondary">Quelle prüfen</button><button id="convert">Konvertieren</button><button id="verify" class="secondary">Ziel prüfen</button></div>
+  <header><div class="header-row"><div class="brand"><div><h1><img src="/assets/wordmark.svg" alt="AnimGraphMigration"></h1><div class="eyebrow" data-i18n="eyebrow">DayZ · local project copies</div></div></div><div class="language"><label for="language" data-i18n="language">Language</label><select id="language"><option value="de">Deutsch</option><option value="en">English</option><option value="cs">Čeština</option></select></div></div><p data-i18n="intro">Migrate legacy animation graphs to the 1.30 format. Inspect the source first, then create a new project copy.</p></header>
+  <section class="panel"><h2 data-i18n="selectProject">Select project</h2>
+    <label for="root" data-i18n="sourceFolder">Source folder</label><input id="root" autocomplete="off" spellcheck="false" placeholder="H:\Modding\Source">
+    <small data-i18n="sourceHint">The folder where the mod resource paths begin. For example, it contains the ExampleMod subfolder.</small>
+    <label for="workspace" data-i18n="workspace">Workspace within this folder</label><input id="workspace" autocomplete="off" spellcheck="false" placeholder="ExampleMod/anims/animgraph/example.aw">
+    <label for="output" data-i18n="newOutput">New output folder</label><input id="output" autocomplete="off" spellcheck="false" placeholder="H:\Modding\ExampleMod_130">
+    <small data-i18n="outputHint">The output folder must not exist yet. Source files remain unchanged.</small>
+    <div class="actions"><button id="inspect" class="secondary" data-i18n="inspect">Inspect source</button><button id="convert" data-i18n="convert">Convert</button><button id="verify" class="secondary" data-i18n="verify">Verify output</button></div>
   </section>
-  <section class="panel"><h2>Native Bewegungsclips importieren</h2>
-    <p>Für das Blackbird-Profil: Aus dem oben angegebenen Zielordner entsteht eine eigene Importkopie. Nach dem Editorimport wird daraus eine weitere, geprüfte Ausgabe erstellt.</p>
-    <label for="importRoot">Neuer Import-Arbeitsordner</label><input id="importRoot" autocomplete="off" spellcheck="false" placeholder="H:\Modding\Blackbird_130_Import">
-    <details><summary>Experimental-Workbench-Vorlagen für die Importkopie</summary>
-      <label for="projectTemplate">Passende Projektvorlage (.gproj)</label><input id="projectTemplate" autocomplete="off" spellcheck="false" placeholder="H:\Modding\Experimental\dayz.gproj">
-      <label for="skeletonDefinitions">Skeleton-Registry mit dem unveränderten Amsel-Skeleton</label><input id="skeletonDefinitions" autocomplete="off" spellcheck="false" placeholder="H:\Modding\Experimental\skeletons.anim.xml">
-      <label for="gameRoot">Experimental-Spieldaten für die Workbench</label><input id="gameRoot" autocomplete="off" spellcheck="false" placeholder="H:\Modding\Experimental\GameData">
-      <small>Verwende separate Experimental-Projektdaten. Die Vorlagen werden gelesen und in die neue Importkopie übernommen.</small>
-    </details>
-    <div class="actions"><button id="prepare-import" class="secondary">Importkopie vorbereiten</button><button id="verify-import" class="secondary">Editorimport prüfen</button></div>
-    <p>In der erzeugten Projektkopie nur den ausgewiesenen Ordner mit zwölf Kandidaten und zwölf Kontrollen neu importieren. Danach hier „Editorimport prüfen“ wählen.</p>
-    <label for="finalOutput">Neue geprüfte Ausgabe</label><input id="finalOutput" autocomplete="off" spellcheck="false" placeholder="H:\Modding\Blackbird_130_Verified">
-    <div class="actions"><button id="finalize-import">Geprüfte Ausgabe erstellen</button><button id="verify-final" class="secondary">Fertige Ausgabe prüfen</button></div>
-    <small>Eine geprüfte Ausgabe ist für den isolierten Spieltest vorgesehen. Die Anwendung veröffentlicht keine Mod.</small>
-  </section>
-  <section id="result" class="panel" aria-live="polite"><h2>Ergebnis</h2><div id="status" class="status">Bereit. Die Prüfung verändert keine Dateien.</div><details id="details" class="hidden"><summary>Prüfbericht anzeigen</summary><pre id="report"></pre></details></section>
-  <footer>Alle Verarbeitung bleibt auf diesem Rechner. Unterstützt werden die dokumentierten Graph-, Template-, Instanz- und Workspace-Konstrukte. Unbekannte Felder führen zu einer verständlichen Fehlermeldung. Die Modellvorschau und das Verhalten im Spiel müssen anschließend in DayZ Experimental geprüft werden.</footer>
+  <section id="result" class="panel" aria-live="polite"><h2 data-i18n="result">Result</h2><div id="status" class="status">Ready. Inspection does not change any files.</div><details id="details" class="hidden"><summary data-i18n="showReport">Show validation report</summary><pre id="report"></pre></details></section>
+  <section class="panel"><h2 data-i18n="supportHeading">Supported formats</h2><p data-i18n="supportText">Legacy AnimGraph 7: state machines, animation sources and switches, with the documented template, instance and workspace fields. Unsupported constructs stop conversion with an explicit error.</p><small data-i18n="assetHint">Animation clips and models are copied unchanged. Check each converted mod in DayZ 1.30 Workbench and in the game, including its preview, bone names and movement.</small></section>
+  <footer data-i18n="footer">All processing stays on this computer. The report records format changes, resource references and file hashes. Output verification checks file integrity; visual validation follows in DayZ 1.30.</footer>
 </main><script>
   const token=location.hash.slice(1);history.replaceState(null,'',location.pathname);
   const buttons=[...document.querySelectorAll('button')];
   const status=document.getElementById('status');
   const detail=document.getElementById('details');
   const read=id=>document.getElementById(id).value.trim();
-  if(!token){status.textContent='Bitte die vollständige lokale Adresse aus dem gestarteten Programm öffnen. Der Sitzungsschlüssel fehlt.';status.className='status error';buttons.forEach(button=>button.disabled=true)}
+  const translations={
+    de:{
+      language:'Sprache',eyebrow:'DayZ · lokale Projektkopien',
+      intro:'Alte Animationsgraphen in das 1.30-Format übertragen. Zuerst die Quelle prüfen, dann eine neue Projektkopie erzeugen.',
+      selectProject:'Projekt auswählen',sourceFolder:'Quellordner',sourceHint:'Der Ordner, unter dem die Pfade aus der Mod beginnen. Beispiel: Er enthält den Unterordner ExampleMod.',
+      workspace:'Workspace innerhalb dieses Ordners',newOutput:'Neuer Zielordner',outputHint:'Der Zielordner darf noch nicht existieren. Die Quelldateien bleiben unverändert.',inspect:'Quelle prüfen',convert:'Konvertieren',verify:'Ziel prüfen',
+      result:'Ergebnis',showReport:'Prüfbericht anzeigen',supportHeading:'Unterstützte Formate',
+      supportText:'Altes AnimGraph-7-Format: State Machines, Animationsquellen und Switches mit den dokumentierten Template-, Instanz- und Workspace-Feldern. Nicht unterstützte Konstrukte stoppen die Konvertierung mit einer konkreten Fehlermeldung.',
+      assetHint:'Animationsclips und Modelle werden unverändert kopiert. Jede konvertierte Mod anschließend in DayZ 1.30 Workbench und im Spiel prüfen, einschließlich Vorschau, Bone-Namen und Bewegung.',
+      footer:'Alle Verarbeitung bleibt auf diesem Rechner. Der Bericht dokumentiert Formatänderungen, Ressourcenverweise und Datei-Hashes. Die Zielprüfung bestätigt die Dateiintegrität; die Sichtprüfung folgt in DayZ 1.30.',
+      ready:'Bereit. Die Prüfung verändert keine Dateien.',missingToken:'Bitte die vollständige lokale Adresse aus dem gestarteten Programm öffnen. Der Sitzungsschlüssel fehlt.',requiredFields:'Bitte die für diesen Schritt benötigten Felder ausfüllen.',
+      processingConvert:'Dateien werden konvertiert und geprüft …',processingCheck:'Dateien werden geprüft …',
+      checkFailed:'Prüfung fehlgeschlagen.',requestFailed:'Die lokale Anwendung ist nicht erreichbar. Prüfe, ob sie noch läuft.',invalidResponse:'Die lokale Anwendung hat keinen lesbaren Prüfbericht zurückgegeben.',backendError:'Fehler: {message}',unexpectedError:'Der Vorgang konnte nicht abgeschlossen werden: {message}',
+      integrityChecked:'Integrität bestätigt: {count} Dateien geprüft.\nDies bestätigt die Dateien; das Spielverhalten muss separat geprüft werden.',
+      graphInspected:'Die Quelle lässt sich im unterstützten Umfang konvertieren. {count} Animationszuweisungen werden übernommen.\nHinweise stehen im Prüfbericht.',
+      graphConverted:'Graphkonvertierung abgeschlossen: {output}\n{count} Animationszuweisungen übernommen. Die Quelle blieb unverändert.\nAls Nächstes die Ausgabe in DayZ 1.30 Workbench und im Spiel prüfen.'
+    },
+    en:{
+      language:'Language',eyebrow:'DayZ · local project copies',
+      intro:'Migrate legacy animation graphs to the 1.30 format. Inspect the source first, then create a new project copy.',
+      selectProject:'Select project',sourceFolder:'Source folder',sourceHint:'The folder where the mod resource paths begin. For example, it contains the ExampleMod subfolder.',
+      workspace:'Workspace within this folder',newOutput:'New output folder',outputHint:'The output folder must not exist yet. Source files remain unchanged.',inspect:'Inspect source',convert:'Convert',verify:'Verify output',
+      result:'Result',showReport:'Show validation report',supportHeading:'Supported formats',
+      supportText:'Legacy AnimGraph 7: state machines, animation sources and switches, with the documented template, instance and workspace fields. Unsupported constructs stop conversion with an explicit error.',
+      assetHint:'Animation clips and models are copied unchanged. Check each converted mod in DayZ 1.30 Workbench and in the game, including its preview, bone names and movement.',
+      footer:'All processing stays on this computer. The report records format changes, resource references and file hashes. Output verification checks file integrity; visual validation follows in DayZ 1.30.',
+      ready:'Ready. Inspection does not change any files.',missingToken:'Open the complete local URL shown by the running application. The session token is missing.',requiredFields:'Fill in the fields required for this step.',
+      processingConvert:'Converting and checking files …',processingCheck:'Checking files …',
+      checkFailed:'Validation failed.',requestFailed:'The local application could not be reached. Check that it is still running.',invalidResponse:'The local application did not return a readable validation report.',backendError:'Error: {message}',unexpectedError:'The operation could not be completed: {message}',
+      integrityChecked:'Integrity confirmed: {count} files checked.\nThis confirms the files; game behavior must be checked separately.',
+      graphInspected:'The source can be converted within the supported scope. {count} animation assignments will be preserved.\nSee the validation report for notes.',
+      graphConverted:'Graph conversion completed: {output}\n{count} animation assignments preserved. The source was unchanged.\nNext, check the output in DayZ 1.30 Workbench and the game.'
+    },
+    cs:{
+      language:'Jazyk',eyebrow:'DayZ · místní kopie projektů',
+      intro:'Převeďte starší animační grafy do formátu 1.30. Nejprve zkontrolujte zdroj a poté vytvořte novou kopii projektu.',
+      selectProject:'Výběr projektu',sourceFolder:'Zdrojová složka',sourceHint:'Složka, vůči které jsou uvedeny cesty ke zdrojům modu. Například obsahuje podsložku ExampleMod.',
+      workspace:'Pracovní prostor v této složce',newOutput:'Nová výstupní složka',outputHint:'Výstupní složka ještě nesmí existovat. Zdrojové soubory zůstanou beze změny.',inspect:'Zkontrolovat zdroj',convert:'Převést',verify:'Ověřit výstup',
+      result:'Výsledek',showReport:'Zobrazit protokol kontroly',supportHeading:'Podporované formáty',
+      supportText:'Starší formát AnimGraph 7: stavové automaty, zdroje animací a přepínače s dokumentovanými poli šablon, instancí a pracovních prostorů. Nepodporované konstrukce zastaví převod s konkrétní chybovou zprávou.',
+      assetHint:'Animační klipy a modely se kopírují beze změny. Každý převedený mod ověřte v DayZ 1.30 Workbench i ve hře, včetně náhledu, názvů kostí a pohybu.',
+      footer:'Veškeré zpracování probíhá na tomto počítači. Protokol zaznamenává změny formátu, odkazy na zdroje a kontrolní součty souborů. Ověření výstupu kontroluje integritu souborů; vizuální kontrola následuje v DayZ 1.30.',
+      ready:'Připraveno. Kontrola nemění žádné soubory.',missingToken:'Otevřete úplnou místní adresu zobrazenou spuštěnou aplikací. Chybí klíč relace.',requiredFields:'Vyplňte pole potřebná pro tento krok.',
+      processingConvert:'Soubory se převádějí a kontrolují …',processingCheck:'Soubory se kontrolují …',
+      checkFailed:'Kontrola selhala.',requestFailed:'Místní aplikace není dostupná. Zkontrolujte, zda je stále spuštěná.',invalidResponse:'Místní aplikace nevrátila čitelný protokol kontroly.',backendError:'Chyba: {message}',unexpectedError:'Operaci se nepodařilo dokončit: {message}',
+      integrityChecked:'Integrita potvrzena: zkontrolované soubory: {count}.\nTím se potvrzuje stav souborů; chování ve hře je nutné ověřit samostatně.',
+      graphInspected:'Zdroj lze převést v podporovaném rozsahu. Zachovaná přiřazení animací: {count}.\nPoznámky najdete v protokolu kontroly.',
+      graphConverted:'Převod grafu dokončen: {output}\nZachovaná přiřazení animací: {count}. Zdroj zůstal beze změny.\nNyní ověřte výstup v DayZ 1.30 Workbench a ve hře.'
+    }
+  };
+  const languageSelect=document.getElementById('language');
+  const languageStorageKey='animgraph-migration.language';
+  let language='en';
+  try{const saved=localStorage.getItem(languageStorageKey);if(Object.hasOwn(translations,saved))language=saved}catch{}
+  let busy=false;
+  let statusState={key:token?'ready':'missingToken',params:{},tone:token?'':'error'};
+  const translate=(key,params={})=>translations[language][key].replace(/\{(\w+)\}/g,(match,name)=>Object.hasOwn(params,name)?String(params[name]):match);
+  function renderStatus(){status.textContent=translate(statusState.key,statusState.params);status.className='status'+(statusState.tone?' '+statusState.tone:'')}
+  function setStatus(key,params={},tone=''){statusState={key,params,tone};renderStatus()}
+  function updateButtons(){buttons.forEach(button=>button.disabled=!token||busy)}
+  function applyLanguage(value){
+    language=Object.hasOwn(translations,value)?value:'en';document.documentElement.lang=language;languageSelect.value=language;
+    document.querySelectorAll('[data-i18n]').forEach(element=>element.textContent=translate(element.dataset.i18n));
+    renderStatus();
+  }
+  languageSelect.addEventListener('change',()=>{applyLanguage(languageSelect.value);try{localStorage.setItem(languageStorageKey,language)}catch{}});
+  applyLanguage(language);updateButtons();
+  class LocalError extends Error{constructor(key){super(key);this.key=key}}
+  class BackendError extends Error{}
   async function run(command){
-    const apiCommand=command==='verify-final'?'verify':command;
-    let payload;
-    if(command==='verify')payload={root:read('output')};
-    else if(command==='verify-final')payload={root:read('finalOutput')};
-    else if(command==='prepare-import')payload={root:read('output'),output:read('importRoot'),projectTemplate:read('projectTemplate'),skeletonDefinitions:read('skeletonDefinitions'),gameRoot:read('gameRoot')};
-    else if(command==='verify-import'||command==='finalize-import')payload={root:read('output'),importRoot:read('importRoot'),...(command==='finalize-import'?{output:read('finalOutput')}:{})};
-    else payload={root:read('root'),workspace:read('workspace'),...(command==='convert'?{output:read('output')}:{}),...(read('assetProfile')?{assetProfile:read('assetProfile')}:{})};
-    if(Object.values(payload).some(value=>!value)){status.textContent='Bitte die für diesen Schritt benötigten Felder ausfüllen.';status.className='status error';return}
-    buttons.forEach(button=>button.disabled=true);status.className='status';status.textContent=command==='convert'?'Dateien werden konvertiert und geprüft …':'Dateien werden geprüft …';detail.classList.add('hidden');
+    if(!token){setStatus('missingToken',{},'error');updateButtons();return}
+    if(busy)return;
+    const payload=command==='verify'?{root:read('output')}:{root:read('root'),workspace:read('workspace'),...(command==='convert'?{output:read('output')}:{})};
+    if(Object.values(payload).some(value=>!value)){setStatus('requiredFields',{},'error');return}
+    busy=true;updateButtons();setStatus(command==='convert'?'processingConvert':'processingCheck');detail.classList.add('hidden');
     try{
-      const response=await fetch('/api/'+apiCommand,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(payload)});
-      const result=await response.json();if(!response.ok)throw new Error(result.error||'Prüfung fehlgeschlagen');
-      if((command==='verify-import'||command==='finalize-import')&&(result.runtimeTestEligible!==true||result.nativeImportRequired!==false))throw new Error('Die nativen Importprüfungen sind noch nicht vollständig bestätigt. Keine Freigabe für den Spieltest.');
-      document.getElementById('report').textContent=JSON.stringify(result,null,2);detail.classList.remove('hidden');status.className='status success';
-      const assets=result.assetMigration;
-      if(command==='prepare-import')status.textContent='Importkopie erstellt. Öffne deren Projektdatei in den passenden Experimental Tools und importiere ausschließlich den angegebenen Clipordner neu.\nProjekt und Importordner stehen im Prüfbericht.';
-      else if(command==='verify-import')status.textContent='Native Importdateien geprüft. Die endgültige Ausgabe kann jetzt erstellt werden; dabei werden alle Importprüfungen erneut ausgeführt.\nDie Sichtprüfung im Spiel folgt anschließend.';
-      else if(command==='finalize-import')status.textContent=`Geprüfte Ausgabe erstellt: ${result.output??payload.output}\nBereit für einen isolierten Spieltest. Die Sichtprüfung bleibt offen.`;
-      else if(apiCommand==='verify')status.textContent=`Integrität bestätigt: ${result.checkedFiles} Dateien geprüft.`+(assets?.nativeImportRequired?'\nDer native Clipimport ist noch offen. Diese Vorbereitung ist noch nicht für den Spieltest bereit.':'\nDies bestätigt die Dateien; das Spielverhalten muss separat geprüft werden.');
-      else if(assets?.nativeImportRequired)status.textContent=command==='inspect'?`Quelle und Blackbird-Profil geprüft: ${assets.transformedClips} Bewegungsclips werden vorbereitet. Danach ist der native Editorimport erforderlich.`:`Graph und ${assets.transformedClips} TXAs vorbereitet: ${result.output}\nDie Quelle blieb unverändert. Als Nächstes die separate Importkopie vorbereiten; die enthaltenen alten ANMs sind noch keine fertige Migration.`;
-      else status.textContent=command==='inspect'?`Quelle ist konvertierbar. ${result.assignments} Animationszuweisungen werden übernommen.\nHinweise stehen im Prüfbericht.`:`Graphkonvertierung abgeschlossen: ${result.output}\n${result.assignments} Animationszuweisungen übernommen. Die Quelle blieb unverändert.\nAls Nächstes die Ausgabe in Experimental Workbench und Spiel prüfen.`;
-    }catch(error){status.className='status error';status.textContent=error.message}finally{buttons.forEach(button=>button.disabled=false)}
+      let response,result;
+      try{response=await fetch('/api/'+command,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(payload)})}catch{throw new LocalError('requestFailed')}
+      try{result=await response.json()}catch{throw new LocalError('invalidResponse')}
+      if(!result||typeof result!=='object'||Array.isArray(result))throw new LocalError('invalidResponse');
+      if(!response.ok){if(typeof result.error==='string'&&result.error)throw new BackendError(result.error);throw new LocalError('checkFailed')}
+      document.getElementById('report').textContent=JSON.stringify(result,null,2);detail.classList.remove('hidden');
+      if(command==='verify')setStatus('integrityChecked',{count:result.checkedFiles},'success');
+      else setStatus(command==='inspect'?'graphInspected':'graphConverted',{count:result.assignments,output:result.output},'success');
+    }catch(error){
+      if(error instanceof LocalError)setStatus(error.key,{},'error');
+      else setStatus(error instanceof BackendError?'backendError':'unexpectedError',{message:error instanceof Error?error.message:String(error)},'error');
+    }finally{busy=false;updateButtons()}
   }
   buttons.forEach(button=>button.addEventListener('click',()=>run(button.id)));
 </script></body></html>

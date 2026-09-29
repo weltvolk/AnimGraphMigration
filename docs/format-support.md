@@ -1,114 +1,91 @@
-# Formatunterstützung
+# Format support
 
-Der Konverter arbeitet mit einem explizit unterstützten Ausschnitt der älteren DayZ-Animationsdateien. Die Ausgabe orientiert sich an lokal untersuchten Dateien der DayZ Experimental Workbench **1.30.164014.27**. Eine vollständige offizielle Dateigrammatik liegt diesem Projekt nicht zugrunde.
+AnimGraphMigration 1.1 provides general graph conversion for an explicitly supported subset of legacy DayZ animation resources. Support depends on constructs and references, not the mod's identity. Compatibility with every mod is not claimed.
 
-Unbekannte semantische Felder und Konstrukte dürfen nicht stillschweigend entfernt werden. Bei nicht unterstützten Eingaben ist ein Abbruch mit Dateipfad und Ursache das gewünschte Verhalten. Eine Erweiterung benötigt einen synthetischen Testfall und, wenn sich die Zielformatsemantik ändert, einen getrennten Nachweis mit dem passenden Editor.
+Output follows files examined with DayZ Experimental Workbench **1.30.164014.27**. This project does not implement a complete official file grammar. Unknown semantic fields and unsupported constructs cause an explicit error instead of being silently removed.
 
-## Ressourcen und Referenzen
+## Resources and references
 
-- Die Workspace-Auswahl erfolgt über einen virtuellen Pfad relativ zum Eingabe-Root, beispielsweise `ExampleMod/anims/bird.aw`.
-- Virtuelle Modpfade bleiben erhalten. Der Konverter erzeugt für seine neuen Ressourcen deterministische Identitäten und stimmt interne Verweise darauf ab.
-- Workspace, Graph und Instanz müssen auf das zugehörige Animation-Set-Template verweisen. Ein alter abweichender Workspace-Templateverweis ist ein prüfpflichtiger Befund.
-- Instanzbelegung und Graph-Sources müssen dieselben qualifizierten Namen `Gruppe.Spalte.Animation` verwenden.
-- Direkt verwendete Graph-, Template-, Instanz-, Clip- und Preview-Model-Dateien müssen im Eingabe-Root vorhanden sein. Weitere Abhängigkeiten innerhalb von Binärmodellen oder der Engine werden nicht automatisch aufgelöst; der Konverter ersetzt keine Vanilla-Spieldaten und importiert keine Binärmodelle.
+- Select a workspace by its virtual path relative to the input root, such as `ExampleMod/anims/example.aw`.
+- Virtual mod paths are preserved. Generated resources receive deterministic identities and consistent internal references.
+- Workspace, graph and instance references must agree with the associated animation-set template. A different legacy workspace template reference requires inspection.
+- Instance assignments and graph sources must use the same qualified `Group.Column.Animation` names.
+- Direct graph, template, instance, clip and preview-model dependencies must exist inside the input root.
+- Dependencies inside binary models or the engine are not resolved automatically. Matching game data remains a separate requirement.
 
-Der Umfang wird vom ausgewählten Workspace bestimmt. Andere Legacy-Dateien im kopierten Projekt werden nicht allein durch das Kopieren zu 1.30-Dateien. Sie müssen bei Bedarf über einen eigenen unterstützten Workspace konvertiert werden.
+The selected workspace determines the conversion scope. Other legacy files are copied without being converted. The command-line entry point expects a legacy workspace, graphs and instances; a known native template may be used. Resource modules can also read some native workspace and instance structures, but this does not make arbitrary native/legacy mixtures supported CLI input.
 
-Der CLI-Einstieg erwartet einen Legacy-Workspace, Legacy-Graphdateien und Legacy-Instanzen. Ein bereits natives Template kann dabei verwendet werden. Die Ressourcenmodule können zusätzlich bekannte native Workspace- und Instanzstrukturen lesen; daraus folgt keine Unterstützung bereits vollständig nativer oder beliebig gemischter Projekte durch den CLI-Konverter.
+## File families
 
-## Dateifamilien
-
-| Familie | Ziel |
+| Family | Output or treatment |
 |---|---|
-| Workspace | Native Workspace-Datei `.aw`; unterstützte Preview-Informationen bleiben erhalten. |
-| Graphdefinition | `AnimSrcGraph` in `.agr`; die Graphdateiliste referenziert die ausgegebenen `.agf`. |
-| Graphinhalt | `AnimSrcGraphFile` mit Sheets, State Machines, States und Transitions. |
-| Template | `AnimSetTemplateSource` mit benannten Gruppen, Spalten und Animationsslots. |
-| Instanz | `AnimSetInstanceSource` mit Templateverweis und qualifizierter Clipbelegung. |
-| Metadaten | Passende Ressourcenidentitäten der erzeugten Dateien. |
-| Optionales Blackbird-TXA-Profil | Zwölf durch Originalprüfsummen gebundene Bewegungsquellen; native ANMs entstehen durch den externen Workbench-Import. |
-| Native ANM-Prüfung | Begrenzter lesender SET6-Parser und Vergleich gegen fest gebundene Original-/Kontrollquellen; keine Binärschreibfunktion. |
+| Workspace | Native `.aw` with supported preview information preserved. |
+| Graph definition | `AnimSrcGraph` in `.agr`, referencing the generated `.agf` files. |
+| Graph contents | `AnimSrcGraphFile` with sheets, state machines, states and transitions. |
+| Template | `AnimSetTemplateSource` with named groups, columns and animation slots. |
+| Instance | `AnimSetInstanceSource` with a template reference and qualified clip assignments. |
+| Metadata | Consistent resource identities for generated files. |
+| Models, skeletons and clips | Copies of source files with no content conversion. |
 
-## Templates, Instanzen und Workspace-Felder
+## Templates, instances and workspace fields
 
-| Eingabe | Unterstützung |
+| Input | Support |
 |---|---|
-| Legacy-AST | Genau ein unbenannter Gruppentyp mit `#ngroupnames 0`; deklarierte Anzahlen werden geprüft. Daraus entstehen explizit benannte Gruppe und Spalte. |
-| Benannte Legacy-Gruppen oder mehrere Legacy-Gruppentypen | Werden abgelehnt. |
-| Native AST | Bekannte `Groups`-/`Name`-/`Animations`-/`Columns`-Struktur; mehrere benannte Gruppen und Spalten sind möglich, sofern alle Zuordnungen eindeutig sind. |
-| Slotnamen | Leere Namen, Punkte in einzelnen Namensbestandteilen, doppelte Namen und mehrdeutige unqualifizierte Zuordnungen werden abgelehnt. |
-| Legacy-ASI | Eigene Instanz ohne Vererbung (`#nparents 0`); Ressourcenzuweisungen werden vollständig den Template-Slots zugeordnet. |
-| Native ASI im Ressourcenmodul | Keine nichtleeren `ParentTemplates`; nur unterstützte Ressourcenzuweisungen. Doppelte oder unbekannte Slots führen zum Abbruch. Der CLI-Einstieg erwartet Legacy-Instanzen. |
-| Workspace | Unterstützte Template-, Instanz-, Graph- und Preview-Model-Verweise werden gemeinsam umgeschrieben. Ein vorhandener EventTable-Verweis bleibt erhalten. |
-| Preview-Metadaten | Unterstützte Model-Verweise und Objektidentitäten bleiben erhalten. Zusätzliche unbekannte Felder oder Transformationen werden abgelehnt. |
-| Zusätzliche Workspace-Tests | Nichtleere `AttachmentTesting`- oder `IkTesting`-Strukturen werden abgelehnt. |
+| Legacy AST | Exactly one unnamed group type with `#ngroupnames 0`; declared counts are checked. Explicit group and column names are generated. |
+| Named legacy groups or multiple legacy group types | Rejected. |
+| Native AST | Known `Groups`/`Name`/`Animations`/`Columns` structure; multiple named groups and columns are supported when assignments are unambiguous. |
+| Slot names | Empty names, dots within a component, duplicates and ambiguous unqualified names are rejected. |
+| Legacy ASI | An independent instance with `#nparents 0`; resource assignments must map fully to template slots. |
+| Native ASI in resource modules | No nonempty `ParentTemplates`; only supported resource assignments. Duplicate or unknown slots are rejected. The CLI expects legacy instances. |
+| Workspace | Supported template, instance, graph and preview-model references are rewritten together. An existing EventTable reference is retained. |
+| Preview metadata | Supported model references and object identities are retained. Unknown extra fields or transforms are rejected. |
+| Additional workspace tests | Nonempty `AttachmentTesting` or `IkTesting` structures are rejected. |
 
-Nicht gelistete Felder sind kein Versprechen auf Unterstützung. Maßgeblich ist die ausdrückliche Abbildung im Code; unerwartete Daten müssen sichtbar scheitern.
+Unlisted fields carry no promise of support. The explicit mapping in the code is authoritative; unexpected data must fail visibly.
 
-Ressourcenpfade dürfen keine Steuerzeichen enthalten. Gequotete Strings verwenden Escape-Sequenzen; ein Legacy-Pfad mit einem mehrdeutigen einzelnen Backslash vor `n`, `r` oder `t` wird nach dem Einlesen abgelehnt. Für virtuelle Ressourcenpfade sind Vorwärtsschrägstriche die eindeutige Schreibweise.
+Resource paths cannot contain control characters. Quoted strings use escapes; an ambiguous single backslash before `n`, `r` or `t` in a legacy path is rejected after parsing. Forward slashes are the unambiguous spelling for virtual resource paths.
 
-## Graphkonstrukte
+## Graph constructs
 
-Die implementierte Graphgrammatik ist **`$AnimGraph 7`** mit den folgenden geprüften Abbildungen. Bedingungen und andere Ausdrücke werden als Strings übertragen; der Konverter führt sie nicht aus.
+The implemented grammar is the supported subset of **`$AnimGraph 7`**. Conditions and other expressions are transferred as strings, not executed.
 
-| Legacy-Konstrukt | Unterstützung und Abbildung |
+| Legacy construct | Support and mapping |
 |---|---|
-| Sheets | Benannte Sheets mit geprüften Node-Referenzen. |
-| `AnimNodeStateMachine` | States, deren Child-Node und Startbedingung sowie Transitions. Verschachtelung erfolgt über Node-Verweise. |
-| Zeitmodus eines States | `realtime` → `Real Time`, `notime` → `Inherit`. Andere Modi werden abgelehnt. |
-| State-Exitflag | `0` oder `1`. |
-| Transition | From-/To-State, Dauer, Startzeit und Bedingung bleiben erhalten; `PostEval` nur `0` oder `1`. Ein leerer Legacy-Ausgangsstate wird wie im Editor als globaler Übergang ohne `FromState` ausgegeben; der Zielstate bleibt erforderlich. |
-| Transition-Blending | Nur der beobachtete Blendwert `S`; `MotionVecBlend` wird wie in der untersuchten nativen Migration mit `0x33 0` ausgegeben. |
-| `AnimNodeSource` | Source-Name, `loop` → `Loop`, `noloop` → `No Loop`; ein Legacy-Tagstring wird zur Tags-Liste. |
-| Andere Tags | Nichtleere Tags auf States, State Machines oder Switches werden mangels belegter Abbildung abgelehnt. |
-| Source-Predictions | Nur leer unterstützt. |
-| `AnimNodeSwitch` | Nur Headerwerte `0 0.0`; leere oder vollständig indizierte Prozentverteilungen, deren Summe 100 ist. Erste Wahrscheinlichkeitsliste nur leer. |
-| Editorposition | Die Y-Koordinate wird für das neue Layout invertiert. Fehlende Position wird als `0 0` mit Warnung ergänzt. |
-| Control-Variablen | `float` und `int` mit leerer Legacy-Anmerkung, Default-, Minimal- und Maximalwert. |
-| Commands | Legacy-Flag `-1` wird wie beobachtet zu `Synchronized 1`. |
-| Control-Expressions | Nur leere Liste. |
-| Debug-Controls | Unterstützte `#DCtrl 2`-Command-Controls ohne benannte Gruppe. |
+| Sheets | Named sheets with checked node references. |
+| `AnimNodeStateMachine` | States, child nodes, start conditions and transitions. Nested structures use node references. |
+| State time mode | `realtime` → `Real Time`; `notime` → `Inherit`. Other modes are rejected. |
+| State exit flag | `0` or `1`. |
+| Transition | Source/target state, duration, start time and condition preserved; `PostEval` only `0` or `1`. An empty legacy source state produces a global transition without `FromState`, as observed in the editor; a target remains required. |
+| Transition blending | Only the observed legacy value `S`; `MotionVecBlend` is emitted as `0x33 0`, matching the examined native migration. |
+| `AnimNodeSource` | Source name; `loop` → `Loop`; `noloop` → `No Loop`; a legacy tag string becomes a tags list. |
+| Other tags | Nonempty tags on states, state machines or switches are rejected because their mapping has not been established. |
+| Source predictions | Empty only. |
+| `AnimNodeSwitch` | Header values `0 0.0` only; empty or fully indexed percentage distributions summing to 100. The first probability list must be empty. |
+| Editor position | Y coordinate is inverted for the new layout. A missing position becomes `0 0` with a warning. |
+| Control variables | `float` and `int`, with an empty legacy annotation, default, minimum and maximum. |
+| Commands | Legacy flag `-1` maps to the observed `Synchronized 1`. |
+| Control expressions | Empty list only. |
+| Debug controls | Supported `#DCtrl 2` command controls without a named group. |
 
-Deklarierte Anzahlen, doppelte IDs und nicht auflösbare interne Verweise werden geprüft. Zusätzliche Node-Typen, andere Modi/Flags, nichtleere Predictions oder Expressions, unbekannte Blendwerte und unbekannte Kontrolltypen führen zum Abbruch.
+Declared counts, duplicate IDs and unresolved internal references are checked. Additional node types, other modes or flags, nonempty predictions or expressions, unknown blend values and unsupported control types cause an error.
 
-Layoutdaten dienen der Editoransicht. Ein ersetzter Layoutwert ist kein Nachweis identischen Laufzeitverhaltens. Ebenso ist der übernommene native `MotionVecBlend`-Wert eine belegte Serialisierungsentscheidung für den untersuchten Fall, keine allgemeine Aussage über jede denkbare Blendsemantik.
+Layout data affects the editor view. Replacing a layout value does not prove identical runtime behavior. The observed `MotionVecBlend` serialization is evidence for the examined case, not a general statement about every blending scenario.
 
-## Optionales Blackbird-2.08-Assetprofil
+## Limits
 
-`blackbird-2.08-motion-v1` ist eine ausdrücklich gewählte Erweiterung. Ohne Profil bleiben Animationsassets Kopien ihrer Eingabe. Das Profil verlangt den vollständigen bekannten Satz von **37 aktiven Zuweisungen und 74 Originaldigests**. Es transformiert zwölf TXAs mit bewegtem Root; 25 ANM-/TXA-Paare bleiben unverändert. Unter diesen unbewegten Quellen sind 19 bekannte TXAs mit einer zusätzlichen schließenden Klammer. Sie werden nur anhand ihrer exakten Originalprüfsumme unverändert übernommen und nicht repariert oder neu importiert.
+- No general support for every DayZ, Enfusion or Arma Reforger format.
+- No PBO extraction or packaging, and no Workshop upload.
+- No model, skeleton, XOB, P3D or texture import.
+- No TXA transformation, ANM generation or content validation of copied movement clips.
+- No automated or headless Workbench import.
+- No automatic repair of camera, script, material, scale or bone issues.
+- No automatic gameplay approval after file or integrity checks.
+- No silent interpretation of unknown nodes, events, sync tables or other unimplemented structures.
 
-| Merkmal | Grenze |
-|---|---|
-| TXA-Eingabe | Genau ein Animationblock, Version 1, höchstens 8 MiB, 2–10.000 Frames und ganzzahlige FPS von 1 bis 240. Der Originaldigest muss zusätzlich zur festen Profilfassung passen. |
-| Skeletonstruktur | 64 eindeutige Bones; bekannte `Scene_Root/Armature/entityposition`-Elternkette; `blackbird_Pelvis_bone` als einziger direkter Root-Child. |
-| Transformationsbasis | Konstanter nachgewiesener Root-Quaternion und bekannte Root-/Armature-Scales; vollständige übereinstimmende Root-/Pelvis-Keylayouts. Keine freie Rotationserkennung oder allgemeine Interpretation der Skeletonskalierung. |
-| Textänderung | Ausschließlich ausgewiesene Root-/Pelvis-Translationszeilen. Anfangsframe und übrige Bytes bleiben erhalten; exakte Rückwärtsrekonstruktion und erneute Vorwärtsrechnung werden geprüft. |
-| Zweitanwendung | Die Umrechnung ist nicht idempotent. Feste Originaldigests und die Ablehnung bereits migrierter Projektbestände verhindern die Zweitanwendung im Produktablauf. |
-| ANM-Leser | Beobachteter `FORM/ANIM/SET6`-Aufbau mit genau einem `FPS\0`-, `HEAD`- und `DATA`-Chunk. Größen, Frame-/Keygrenzen, eindeutige Bones, endliche Quantisierungswerte und vollständige Abdeckung werden geprüft. Unbekannte Chunks und Kodierungen werden abgelehnt. |
-| Native Kontrolle | Fest an die ursprünglichen Quellen und **Experimental Workbench 1.30.164014.27** gebundene Kontroll-Digests. Andere Ergebnisse oder vom Aufrufer eingereichte Vertrauensdaten werden nicht automatisch akzeptiert. |
-| Kandidaten-Translationsquantisierung | Root-/Pelvis-`minT` und `rangeT` müssen exakt den aus der gebundenen korrigierten TXA abgeleiteten Float32-Minima und -Spannweiten entsprechen. Erst anschließend wird die Fehlertoleranz bestimmt; abweichende Importerparameter werden abgelehnt. |
-| Native Importmetadaten | Die ausgewiesenen `.anm.meta`-Dateien dürfen nativ anders formatiert oder kommentiert werden, sofern die geparste Struktur vollständig gleich bleibt. Der Bericht erfasst beide Digests. Unbekannte zusätzliche oder semantisch geänderte Metadaten werden abgelehnt. |
-| Projektvorlage | Unterstützte `GameProjectClass`-Struktur mit genau einer PC-Konfiguration. Native Importkopie erhält isolierte Mounts und die ausdrücklich angegebene Skeleton-Registry. Mehrdeutige oder nicht unterstützte Mountstrukturen werden abgelehnt. |
+A mod without its own AnimGraph is outside this conversion workflow. Script-driven `AnimationSources` and bone APIs require separate tests. Copied models and clips need runtime compatibility checks even when their graph is supported.
 
-Neue oder veränderte aktive Clips, andere Hierarchien, abweichende Quaternions/Scales, fehlende oder unterschiedlich belegte Root-/Pelvis-Frames und unbekannte semantische Felder führen zum Abbruch. Der reine Graphkonverter behält unabhängig davon seinen oben dokumentierten Umfang. Anleitung, Pflichtparameter und getrennte Ordnerstände stehen in [Blackbird-Profil](blackbird-profile.md).
+## Extensions and project checks
 
-Der dokumentierte Import-/Prüf-/Finalisierungspfad wurde mit diesem Build tatsächlich ausgeführt: 24 neu importierte Quellen, zwölf geprüfte Kandidaten und eine erfolgreiche finale Integritätsprüfung. Das erweitert weder das feste Eingabeprofil noch den unterstützten Editorbuild und ersetzt keine Modellvorschau oder Sichtabnahme der Produkt-Ausgabe.
+Use a small artificial legacy input and expected target structure when proposing new constructs. Keep original mod and game data out of the repository. Tests should cover value preservation, reference consistency, rejected ambiguities and reproducible output. Changes to target-format semantics also require separate evidence from the matching editor.
 
-Die anschließend separat durchgeführte, begrenzte Produktsichtabnahme war erfolgreich. Sie gilt für den beobachteten Ablauf und den bytegleichen finalen Laufzeitbestand; die Workbench-Modellvorschau bleibt unbestätigt. Der genaue Umfang ist unter [Validierung](validation.md) dokumentiert.
-
-## Grenzen
-
-- Kein allgemeiner Konverter für sämtliche Enfusion- oder Arma-Reforger-Formate.
-- Kein PBO-Entpacker, keine PBO-Erstellung und kein Workshop-Upload.
-- Kein Modell-, Skeleton-, XOB-, P3D- oder Texturimport. Das begrenzte TXA-Profil ersetzt keine allgemeine Animationskonvertierung.
-- Keine eigene ANM-Erzeugung und kein automatisierter oder headless ausgeführter Workbench-Import. Die nativen Kandidaten/Kontrollen müssen im passenden Editor entstehen.
-- Keine automatische Behebung von Kamera-, Material-, Skalierungs- oder Bone-Problemen.
-- Kein Nachweis, dass ein gültiger Graph das bisherige Spielverhalten unverändert reproduziert.
-- Keine automatische Freigabe des Spielverhaltens nach bestandener Importprüfung; die finalisierte Ausgabe ist zunächst für einen isolierten Sichttest vorgesehen.
-- Keine stillschweigende Interpretation unbekannter Nodes, Events, Sync-Tabellen oder anderer nicht implementierter Strukturen.
-
-Ein Modbestand ohne eigene AnimGraph-Dateien kann nicht allein wegen einer DayZ-Versionsänderung durch dieses Werkzeug migriert werden. Scriptgesteuerte `AnimationSources` und Bone-APIs benötigen eigene Tests.
-
-## Erweiterungen
-
-Für neue Konstrukte bitte einen kleinen, künstlichen Legacy-Eingabesatz und die erwartete Zielstruktur verwenden. Echte Mod- und Spieldaten bleiben außerhalb des Repositories. Jede Erweiterung sollte Werteerhalt, Referenzkonsistenz, abgelehnte Mehrdeutigkeiten und einen erneuten Lauf gegen dieselbe Quelle prüfen.
+See the [validation guide](validation.md) for editor and game checks of your own mod.

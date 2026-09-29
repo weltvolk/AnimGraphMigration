@@ -1,8 +1,8 @@
 @echo off
 where node >nul 2>&1
 if errorlevel 1 (
-  echo Bitte zuerst Node.js 22 oder neuer installieren.
-  echo Danach diese Startdatei erneut oeffnen.
+  echo Install Node.js 22 or newer, then open this launcher again.
+  echo Bitte Node.js 22 oder neuer installieren und diese Startdatei erneut oeffnen.
   pause
   exit /b 1
 )
