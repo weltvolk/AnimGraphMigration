@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "profileId": "blackbird-2.08-motion-v1",
+  "importerBuild": "1.30.164014.27",
+  "clips": [
+    {
+      "source": "Default.Default.jump_walk_H110_L350",
+      "originalAnmSha256": "e186a5de42de2c06f7a5cbd4758899126c3015810cf498affb060dc26e9b89aa",
+      "originalTxaSha256": "41c9ea84399413c6f63b7acfe5b94a66676bec9b3ddcd205af8727639eb2c5d8",
+      "controlAnmSha256": "e9fa39c15b680af16f5a0f3d9bcdafb1cc5bb1bf1e1c96cac101932717ac1cb5"
+    },
+    {
+      "source": "Default.Default.run",
+      "originalAnmSha256": "4178d894d0dd1c55b3ff9bf245e001e6f3115c0ba690574e8048eaacd25d9f8c",
+      "originalTxaSha256": "45f2dcb06918d3e9a355f9403feaa5587714846bf30e600cbbb3c69440464585",
+      "controlAnmSha256": "4178d894d0dd1c55b3ff9bf245e001e6f3115c0ba690574e8048eaacd25d9f8c"
+    },
+    {
+      "source": "Default.Default.run_escape",
+      "originalAnmSha256": "89089d069f37d3cb24b868ca7d7bad154c8a57c165d8db50c41dd63f292d80f4",
+      "originalTxaSha256": "5515dff03212f0e39813eb58d232d1369fd4696079511172375bcf0354fc774e",
+      "controlAnmSha256": "bb7fcbb93206d56874dd6bfe2b7cebdb98ab4a6222a3d36109ffc82c4dde9f5c"
+    },
+    {
+      "source": "Default.Default.run_turn_L144",
+      "originalAnmSha256": "b4337b90484b58219a51c5ee99f7bbf7f26d95cd71d0f01ef72280ad930bb920",
+      "originalTxaSha256": "a3e29221e9bbff4069be001a3c41d08aaedfa0a5e7a8bab694fe6a6565dd433e",
+      "controlAnmSha256": "b4337b90484b58219a51c5ee99f7bbf7f26d95cd71d0f01ef72280ad930bb920"
+    },
+    {
+      "source": "Default.Default.run_turn_R144",
+      "originalAnmSha256": "36ba811326d85de8218cb20ce6e295768182bb479ee6fddca48a171776b9709f",
+      "originalTxaSha256": "4428fdb748c539c6ac1500440966450579190f753ac1dcfefbab5bbb9cdfbd49",
+      "controlAnmSha256": "36ba811326d85de8218cb20ce6e295768182bb479ee6fddca48a171776b9709f"
+    },
+    {
+      "source": "Default.Default.start_run_F",
+      "originalAnmSha256": "ead07b63190dacd5bda4a07dfcd05eb77975cb55c0d97cf4386f014025a3b597",
+      "originalTxaSha256": "774eabcd8004a530cd4cef75bc3bcd5c7f9964a07a799c934db3a533439fdb4b",
+      "controlAnmSha256": "3013ec8cbfc21c60d0d76d2d7f38e74c469fe174c9f846189ad4923acd16c629"
+    },
+    {
+      "source": "Default.Default.start_walk_L144",
+      "originalAnmSha256": "42c12d115406243bc0b69e53f934e5d4e58f989f4366db1c7007b8c7cb4ebbef",
+      "originalTxaSha256": "d167f4da7fc2814e2040accdd25b6faae8c545ebc6a7720609d59c4083365104",
+      "controlAnmSha256": "a493dc23285a7d6473f4de171cda69f0b4abc262ff7c780bd443a9bd2d920ace"
+    },
+    {
+      "source": "Default.Default.walk",
+      "originalAnmSha256": "8f4f4430e2b0e63726326344465b0f4dd0d3637d97461aafed5679ab44f8154c",
+      "originalTxaSha256": "35c216cd52a0a0c9a999415a910d24bff0d935b9c0e446a46b22e5dc1c7bfb8e",
+      "controlAnmSha256": "7d4ce4ad0d42781b8d9ec33e05fffd1da837c9829e0ff0b9da17c0a5333a339c"
+    },
+    {
+      "source": "Default.Default.z_flytorpedo4",
+      "originalAnmSha256": "b2d5c8455b8e7c0e98b6adcfd4449c84b2bbb24b7a42b9c820401d091d83b465",
+      "originalTxaSha256": "9c1108d295ec9350a2364b817020757804e9ba2cbeb7c5a97808d366fd4d1854",
+      "controlAnmSha256": "e21892d1c7ca8418684028e50a4bfa04d7159b4579910bbc757299595fe933fc"
+    },
+    {
+      "source": "Default.Default.z_flytorpedo5",
+      "originalAnmSha256": "f1688a065f29f83bfe4cf3fb4f6e6f61d9cb10b5da8f639091a1d8245094a3e2",
+      "originalTxaSha256": "478a0dabbf85fb88d578002b1b991709aeb0931891b4a40e791112cbf7d336c5",
+      "controlAnmSha256": "d6db491545f893709352196224da0266bb8b126ca402425b9e086a2b3585fe9c"
+    },
+    {
+      "source": "Default.Default.z_flytorpedo6",
+      "originalAnmSha256": "2ce627a129174f3655bc0bd326781ce83cc743f36a5687e092051a94629ca096",
+      "originalTxaSha256": "3e50b961abaf7bebf26ef53ade578356b04896e309f0ff5b838b52a7499339d0",
+      "controlAnmSha256": "7d18b67a80c9c1adce57cbcfcfff67e4a01cdf43da54409317ef59638f4f78d7"
+    },
+    {
+      "source": "Default.Default.z_flytorpedoopen",
+      "originalAnmSha256": "e253d9105c4e518cf57c7851770dcca6705f18e18993cfcda6ebcd3fd5c283ce",
+      "originalTxaSha256": "e89e9a06de9696661dec4e914e0cec1fba1edd37ea2c2ddb145604425229ddf1",
+      "controlAnmSha256": "1377d7ba6499aa0d2329ea86aaa00fe67d3cd1aa8b6105c53a97d9bce04bfb0e"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "animgraph-migration",
+  "version": "1.0.0",
+  "description": "Copy-only DayZ legacy animation graph migration with explicit format validation",
+  "type": "module",
+  "private": true,
+  "bin": { "animgraph-migration": "bin/animgraph-migration.mjs" },
+  "scripts": {
+    "start": "node bin/animgraph-migration.mjs",
+    "test": "node --test",
+    "gui": "node bin/animgraph-migration.mjs serve"
+  },
+  "engines": { "node": ">=22" },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/weltvolk/AnimGraphMigration.git" }
+}

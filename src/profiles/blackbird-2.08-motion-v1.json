@@ -1,0 +1,519 @@
+{
+  "schema": 1,
+  "profileId": "blackbird-2.08-motion-v1",
+  "profileVersion": 1,
+  "rootBone": "entityposition",
+  "pelvisBone": "blackbird_Pelvis_bone",
+  "expectedBones": [
+    "Scene_Root",
+    "Armature",
+    "entityposition",
+    "blackbird_Pelvis_bone",
+    "blackbird_Tail_bone",
+    "blackbird_l_TF3_bone",
+    "blackbird_l_TF2_bone",
+    "blackbird_TF1_bone",
+    "blackbird_r_TF2_bone",
+    "blackbird_r_TF3_bone",
+    "blackbird_Spine1_bone",
+    "blackbird_Spine2_bone",
+    "blackbird_Neck_bone",
+    "blackbird_Head_bone",
+    "blackbird_Beak_bone",
+    "blackbird_Jaw_bone",
+    "blackbird_Mandible_bone",
+    "blackbird_l_EyelidUpper_bone",
+    "blackbird_l_EyelidLower_bone",
+    "blackbird_r_EyelidUpper_bone",
+    "blackbird_r_EyelidLower_bone",
+    "pin_lookat",
+    "blackbird_l_Clav_bone",
+    "blackbird_l_Humerus_bone",
+    "blackbird_l_Ulna_bone",
+    "blackbird_l_Aula_bone",
+    "blackbird_l_PF1_bone",
+    "blackbird_l_PF2_bone",
+    "blackbird_l_SF2_bone",
+    "blackbird_l_SF1_bone",
+    "blackbird_r_Clav_bone",
+    "blackbird_r_Humerus_bone",
+    "blackbird_r_Ulna_bone",
+    "blackbird_r_Aula_bone",
+    "blackbird_r_PF1_bone",
+    "blackbird_r_PF2_bone",
+    "blackbird_r_SF2_bone",
+    "blackbird_r_SF1_bone",
+    "blackbird_l_Thigh_bone",
+    "blackbird_l_Knee_bone",
+    "blackbird_l_Ankle_bone",
+    "blackbird_l_Foot_bone",
+    "blackbird_l_DigitIV_1_bone",
+    "blackbird_l_DigitIV_2_bone",
+    "blackbird_l_DigitIV_3_bone",
+    "blackbird_l_DigitIII_1_bone",
+    "blackbird_l_DigitIII_2_bone",
+    "blackbird_l_DigitIII_3_bone",
+    "blackbird_l_DigitII_1_bone",
+    "blackbird_l_DigitII_2_bone",
+    "blackbird_l_DigitI_bone",
+    "blackbird_r_Thigh_bone",
+    "blackbird_r_Knee_bone",
+    "blackbird_r_Ankle_bone",
+    "blackbird_r_Foot_bone",
+    "blackbird_r_DigitIII_1_bone",
+    "blackbird_r_DigitIII_2_bone",
+    "blackbird_r_DigitIII_3_bone",
+    "blackbird_r_DigitII_1_bone",
+    "blackbird_r_DigitII_2_bone",
+    "blackbird_r_DigitIV_1_bone",
+    "blackbird_r_DigitIV_2_bone",
+    "blackbird_r_DigitIV_3_bone",
+    "blackbird_r_DigitI_bone"
+  ],
+  "assignments": [
+    {
+      "source": "Default.Default.death",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/DeathAir.anm",
+        "sha256": "90c90847a17f87e380f3baf25319d231d177f36dcc208c22a5743736e0950693"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/DeathAir.txa",
+        "sha256": "5d327639706bbae3e90950b72d3f115027e3d1de3d78d2795702939036d3f777"
+      }
+    },
+    {
+      "source": "Default.Default.death_end",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/Kadaverpose.anm",
+        "sha256": "3bcab00089758ac304eb69e8acc7a263d988b9ad78613e6745092dcb84d869db"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/Kadaverpose.txa",
+        "sha256": "0ed2b47ebcf939d3de43b5efa716d7be364f8d19f6b529ebd148542c4af134a3"
+      }
+    },
+    {
+      "source": "Default.Default.jump_run_H110_L350",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/DeathGround.anm",
+        "sha256": "186a29f0c487b7c0a32160eb7037471420310e57f8a8561653be668a45983b88"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/DeathGround.txa",
+        "sha256": "c706dd2db372f81efe49a5df45ed09d012aea2fe4712aef96ad3d80cc5d16fcd"
+      }
+    },
+    {
+      "source": "Default.Default.jump_run_H160_L350",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase01.anm",
+        "sha256": "8ae66831fd683944eda23f7557eee90008bc80ad74bd5743064be0cd45c90429"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase01.txa",
+        "sha256": "526195ece75b0b8dbc010660a2d5d339790ebef94a31bc71a5c8b68050e3c296"
+      }
+    },
+    {
+      "source": "Default.Default.jump_walk_H110_L350",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyLand.anm",
+        "sha256": "e186a5de42de2c06f7a5cbd4758899126c3015810cf498affb060dc26e9b89aa"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyLand.txa",
+        "sha256": "41c9ea84399413c6f63b7acfe5b94a66676bec9b3ddcd205af8727639eb2c5d8"
+      }
+    },
+    {
+      "source": "Default.Default.run",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/Fly.anm",
+        "sha256": "4178d894d0dd1c55b3ff9bf245e001e6f3115c0ba690574e8048eaacd25d9f8c"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/Fly.txa",
+        "sha256": "45f2dcb06918d3e9a355f9403feaa5587714846bf30e600cbbb3c69440464585"
+      }
+    },
+    {
+      "source": "Default.Default.run_escape",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyGlide.anm",
+        "sha256": "89089d069f37d3cb24b868ca7d7bad154c8a57c165d8db50c41dd63f292d80f4"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyGlide.txa",
+        "sha256": "5515dff03212f0e39813eb58d232d1369fd4696079511172375bcf0354fc774e"
+      }
+    },
+    {
+      "source": "Default.Default.run_turn_L144",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyLeft.anm",
+        "sha256": "b4337b90484b58219a51c5ee99f7bbf7f26d95cd71d0f01ef72280ad930bb920"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyLeft.txa",
+        "sha256": "a3e29221e9bbff4069be001a3c41d08aaedfa0a5e7a8bab694fe6a6565dd433e"
+      }
+    },
+    {
+      "source": "Default.Default.run_turn_R144",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyRight.anm",
+        "sha256": "36ba811326d85de8218cb20ce6e295768182bb479ee6fddca48a171776b9709f"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyRight.txa",
+        "sha256": "4428fdb748c539c6ac1500440966450579190f753ac1dcfefbab5bbb9cdfbd49"
+      }
+    },
+    {
+      "source": "Default.Default.stand_eating",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/Eat.anm",
+        "sha256": "debf753acf5249bb134aba9bd03db7878fc1c3b9c3f1907d919f9de8c317ce61"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/Eat.txa",
+        "sha256": "0a05883bf3bbaff9a690d5bf4fecc8b57df052282676d9cf699c59dae72467a8"
+      }
+    },
+    {
+      "source": "Default.Default.stand_eating_2_stand_nervous",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase02.anm",
+        "sha256": "ad24d1d6e1af126e16ce2719d8e1522255821b08f50976bd0aa02c32b871c9af"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase02.txa",
+        "sha256": "30e988ba8494dd94eaacd85ec82d4aa496e8a6c0de6ccbed4f3ed7464aecd0ae"
+      }
+    },
+    {
+      "source": "Default.Default.stand_eating_idle_1",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase03.anm",
+        "sha256": "1fd19b3557c9b17f2dae117916d930570ce55c40e60904ee278e80346def3572"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase03.txa",
+        "sha256": "f3ce7fe2060088cb996f6030686be035fde7117dcb50be91d2ceec29731e9029"
+      }
+    },
+    {
+      "source": "Default.Default.stand_eating_idle_2",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase04.anm",
+        "sha256": "7b0c0c2b7831dec054edd0bddaa00ab72cd64eb748522d1f8f00034906e05ffe"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase04.txa",
+        "sha256": "0dfbf681da01d8bea81b01751360a912301b74aa91dd232981fa45b4794069c0"
+      }
+    },
+    {
+      "source": "Default.Default.stand_eating_idle_3",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase05.anm",
+        "sha256": "85ce432803679a4ec1bf112f7fa29294d08f2d8a2cf226130e3eb9e199ec0e32"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase05.txa",
+        "sha256": "0bfb90064f9e7f6b65f17921cecd7d6d79dfd0df8358b55627bef560ff7ae9fc"
+      }
+    },
+    {
+      "source": "Default.Default.stand_eating_idle_4",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase06.anm",
+        "sha256": "10fd5727d0d3bd2b44e7aad3a166a3be4f2bc6c7e1821b9951fd05200e656cb0"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase06.txa",
+        "sha256": "b282eca6ac258a61543aeccd99992e194305a0e3e9eb6b63d5374b44ceabbb80"
+      }
+    },
+    {
+      "source": "Default.Default.stand_nervous",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/Idle.anm",
+        "sha256": "d1e320cd3fdb8c5a329f490147fcfb0af04029d69f733f49f21bd10e35eb1ca7"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/Idle.txa",
+        "sha256": "67ef456e112600aa12517f607b7321f98f9ab45c3a9801f0740544f905b38e3b"
+      }
+    },
+    {
+      "source": "Default.Default.stand_nervous_2_stand_eating",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase07.anm",
+        "sha256": "96e8882741c5b961672fc6f7940a1453875166d620529623a33754c0aa127b4b"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase07.txa",
+        "sha256": "66c2a69e70ce9ba6ace18dfc192cd05f2e71020dd61f3f8f78566f9897fcac27"
+      }
+    },
+    {
+      "source": "Default.Default.stand_nervous_idle",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/PerchQuiet.anm",
+        "sha256": "8dfee821473788248a08c33dd073649530eec646d78b6c9c4879e91f7d9d88f1"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/PerchQuiet.txa",
+        "sha256": "a6a87b623d2d65adcd71d5d58d7137f47a0553e308368fc2fce73e4baf4fd1e3"
+      }
+    },
+    {
+      "source": "Default.Default.stand_nervous_left",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase08.anm",
+        "sha256": "a168aa11dabca4f8a9de1995f20d19ba0eceb19d3d6dc5753fcbca0fae304e54"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase08.txa",
+        "sha256": "23f851bbbc247edc9ea0fa46084ad256337d929861270dbb60f88fd9cf1dd1d0"
+      }
+    },
+    {
+      "source": "Default.Default.stand_nervous_right",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase09.anm",
+        "sha256": "a05fce1ba561174e4ddefa6d7d48bbef42f330f877bcd72e99f5f86479a489bc"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase09.txa",
+        "sha256": "70d3e531e5ae3dee0afe3b0738f01c05af786cc0cd392fcd8db35912ec3d5c25"
+      }
+    },
+    {
+      "source": "Default.Default.start_run_F",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyStart.anm",
+        "sha256": "ead07b63190dacd5bda4a07dfcd05eb77975cb55c0d97cf4386f014025a3b597"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyStart.txa",
+        "sha256": "774eabcd8004a530cd4cef75bc3bcd5c7f9964a07a799c934db3a533439fdb4b"
+      }
+    },
+    {
+      "source": "Default.Default.start_run_L144",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase10.anm",
+        "sha256": "9f2909ae7c81cd5fc4b5821cf0d72b40e3356750a924ac5c65dbc33abe3cc1d0"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase10.txa",
+        "sha256": "e967de8cc587aecf69518e855f6d14b173a7370df0feb3481ac6a3deda7344c1"
+      }
+    },
+    {
+      "source": "Default.Default.start_run_L72",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase11.anm",
+        "sha256": "621cb16f2571dbbe49866084a37ff58036204d09aaaf7a345117ea4a4eeae47e"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase11.txa",
+        "sha256": "97f2981e3470e56c0f77f7c47f172110b0a83d04cf145857b3cdcbf4b0a2e689"
+      }
+    },
+    {
+      "source": "Default.Default.start_run_R144",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase12.anm",
+        "sha256": "3e57119962b66b1c1eebaa85a22e7eb0c961fa3613aad242ee4d9f089a0ffe43"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase12.txa",
+        "sha256": "9e07fad280188da7f3012f267fa73fb038075f6a69559bad02e04d29b2fd8ae1"
+      }
+    },
+    {
+      "source": "Default.Default.start_run_R72",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase13.anm",
+        "sha256": "aeaf0a656fd8e9f593e1824bd85eb5eb135aafdeb6e921420781914661815015"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase13.txa",
+        "sha256": "6c039f15570d6e939075e369efb4f42ef9e70b2db5329823a513c5bf951c6792"
+      }
+    },
+    {
+      "source": "Default.Default.start_walk_F",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase14.anm",
+        "sha256": "fff8d15a03b118a1784698f79db72d3ebdb398ab9a53cc3dca1ceda722e20e5a"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase14.txa",
+        "sha256": "580a6e50086f3ea4c8b4b83bd894e62ad3773fd5c976ddc67a38d21e53ad148c"
+      }
+    },
+    {
+      "source": "Default.Default.start_walk_L144",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/CalmRun.anm",
+        "sha256": "42c12d115406243bc0b69e53f934e5d4e58f989f4366db1c7007b8c7cb4ebbef"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/CalmRun.txa",
+        "sha256": "d167f4da7fc2814e2040accdd25b6faae8c545ebc6a7720609d59c4083365104"
+      }
+    },
+    {
+      "source": "Default.Default.start_walk_L72",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase15.anm",
+        "sha256": "6f8842ff01822ad6aa14c891d45a4a190d81db5909c610de25907009572fb208"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase15.txa",
+        "sha256": "f6e7a32b3383068acc5004a4b7e513a5d117bf2a49dd3bfa1d4b2ecd23e86c67"
+      }
+    },
+    {
+      "source": "Default.Default.start_walk_R144",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/PerchTurnHop.anm",
+        "sha256": "8fdab5893a9ed8bdd1caad3cc36cd4f76abd41846b985b618e13a6c92cc05036"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/PerchTurnHop.txa",
+        "sha256": "ee6fd192db6b7583e05d60e6d8c4bf5196f873dafba2adb5a243221bc3df8d19"
+      }
+    },
+    {
+      "source": "Default.Default.start_walk_R72",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase16.anm",
+        "sha256": "ec83f08f3499e0646ab18f7281c6ffdf0309fe596bd83ab98893a1e04cb676d1"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase16.txa",
+        "sha256": "e9792129946f18a41d7b8fb67de7c2fb4a5219ce93524cc405eff780c43c463e"
+      }
+    },
+    {
+      "source": "Default.Default.walk",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/Run.anm",
+        "sha256": "8f4f4430e2b0e63726326344465b0f4dd0d3637d97461aafed5679ab44f8154c"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/Run.txa",
+        "sha256": "35c216cd52a0a0c9a999415a910d24bff0d935b9c0e446a46b22e5dc1c7bfb8e"
+      }
+    },
+    {
+      "source": "Default.Default.walk_eating",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase17.anm",
+        "sha256": "e9e5b844c156b6b7a45ef5fa1fad85263e458f6ae71ca56abf83feda27230354"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase17.txa",
+        "sha256": "2131a0ece6ec9dd035e6699744ad79d126ac649219000c53891f0cfc37e9fbc8"
+      }
+    },
+    {
+      "source": "Default.Default.walk_eating_idle_1",
+      "action": "copy-unchanged",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase18.anm",
+        "sha256": "e20291305bf6e662615e65034793a6cac8b1c5d8e9a519321d3029a825acc768"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/SongPhrase18.txa",
+        "sha256": "0036689415942b62d01924d5776b2fba126026a4b563fb77b0f4b39fc2c6a79f"
+      }
+    },
+    {
+      "source": "Default.Default.z_flytorpedo4",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyTorpedo4.anm",
+        "sha256": "b2d5c8455b8e7c0e98b6adcfd4449c84b2bbb24b7a42b9c820401d091d83b465"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyTorpedo4.txa",
+        "sha256": "9c1108d295ec9350a2364b817020757804e9ba2cbeb7c5a97808d366fd4d1854"
+      }
+    },
+    {
+      "source": "Default.Default.z_flytorpedo5",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyTorpedo5.anm",
+        "sha256": "f1688a065f29f83bfe4cf3fb4f6e6f61d9cb10b5da8f639091a1d8245094a3e2"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyTorpedo5.txa",
+        "sha256": "478a0dabbf85fb88d578002b1b991709aeb0931891b4a40e791112cbf7d336c5"
+      }
+    },
+    {
+      "source": "Default.Default.z_flytorpedo6",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyTorpedo6.anm",
+        "sha256": "2ce627a129174f3655bc0bd326781ce83cc743f36a5687e092051a94629ca096"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyTorpedo6.txa",
+        "sha256": "3e50b961abaf7bebf26ef53ade578356b04896e309f0ff5b838b52a7499339d0"
+      }
+    },
+    {
+      "source": "Default.Default.z_flytorpedoopen",
+      "action": "transform-root-motion",
+      "anm": {
+        "path": "AmbientBlackbird/anims/animations/FlyTorpedoOpen.anm",
+        "sha256": "e253d9105c4e518cf57c7851770dcca6705f18e18993cfcda6ebcd3fd5c283ce"
+      },
+      "txa": {
+        "path": "AmbientBlackbird/anims/animations/FlyTorpedoOpen.txa",
+        "sha256": "e89e9a06de9696661dec4e914e0cec1fba1edd37ea2c2ddb145604425229ddf1"
+      }
+    }
+  ]
+}
